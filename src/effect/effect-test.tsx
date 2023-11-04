@@ -19,7 +19,7 @@ function EffectOne({ count }: { count: number }) {
   }, []);
 
   return (
-    <div style={{ border: "1px solid white" }}>
+    <div className="childWrapper">
       <ReadableTable value={state}></ReadableTable>
       <RandomColorDiv />
     </div>
@@ -41,7 +41,7 @@ function EffectTwo({ count }: { count: number }) {
   }, [count]);
 
   return (
-    <div style={{ border: "1px solid white" }}>
+    <div className="childWrapper">
       <ReadableTable value={state} />
       <RandomColorDiv />
     </div>

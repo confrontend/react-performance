@@ -6,7 +6,13 @@ export function heavy() {
   return date;
 }
 
-const ReadableTable = ({ value, temp }: { value: string; temp?: string }) => {
+const ReadableTable = ({
+  value,
+  temp,
+}: {
+  value: string | boolean;
+  temp?: string;
+}) => {
   const tableStyle: CSSProperties = {
     color: "white",
     margin: "0 auto",
@@ -23,12 +29,14 @@ const ReadableTable = ({ value, temp }: { value: string; temp?: string }) => {
     padding: "8px",
   };
 
+  console.log("State:", value);
+
   return (
     <table style={tableStyle}>
       <tbody>
         <tr style={rowStyle}>
           <td style={cellStyle}>State:</td>
-          <td style={cellStyle}>{value}</td>
+          <td style={cellStyle}>{String(value)}</td>
         </tr>
         {/* <tr>
           <td style={cellStyle}>Constant</td>

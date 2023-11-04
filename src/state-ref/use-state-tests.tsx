@@ -57,7 +57,7 @@ function StateTwo() {
   }
 
   return (
-    <div style={{ border: "1px solid white" }}>
+    <div className="childWrapper">
       <ReadableTable value={state}></ReadableTable>
       <RandomColorDiv />
       <button onClick={update}>Set state</button>

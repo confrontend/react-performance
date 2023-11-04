@@ -30,6 +30,7 @@ function MemoOne() {
  * {state} changes in UI? ✅
  */
 function MemoTwo({ count }: { count: number }) {
+  // The difference between useMemo and useState with lazy initiation is the dependency array.
   const state = useMemo(() => heavy(), [count]);
   return (
     <div style={{ border: "1px solid white" }}>
