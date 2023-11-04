@@ -3,6 +3,7 @@ body .childWrapper {
   border-radius: 1em;
   border: 1px solid white;
   width: 10em;
+  padding: 1em;
 }
 
 #root {

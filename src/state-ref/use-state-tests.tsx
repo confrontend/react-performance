@@ -14,7 +14,7 @@ function StateZero() {
   const [state] = useState(heavy());
 
   return (
-    <div style={{ border: "1px solid white" }}>
+    <div className="childWrapper">
       <ReadableTable value={state}></ReadableTable>
       <RandomColorDiv />
     </div>
@@ -34,7 +34,7 @@ function StateOne() {
   const [state] = useState(() => heavy());
 
   return (
-    <div style={{ border: "1px solid white" }}>
+    <div className="childWrapper">
       <ReadableTable value={state}></ReadableTable>
       <RandomColorDiv />
     </div>
