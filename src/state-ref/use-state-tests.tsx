@@ -1,51 +1,68 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { RandomColorDiv, ReadableTable, heavy } from "../utils/util.jsx";
 
-function calculateValue(param: string) {
-  console.log("calculateValue", param);
-  const date = String(new Date().getTime());
-  return `calculateValue ${param} ${date}`;
+/**
+ * On every click in parent:
+ * Component renders? ✅
+ * Component's children get rendered? ✅
+ * {heavy} is called? ✅
+ * {state} changes in UI? ❌
+ */
+function StateZero() {
+  console.log("StateZero");
+
+  const [state] = useState(heavy());
+
+  return (
+    <div style={{ border: "1px solid white" }}>
+      <ReadableTable value={state}></ReadableTable>
+      <RandomColorDiv />
+    </div>
+  );
 }
 
 /**
- * StateOne is logged on every re-render.
- * calculateValue is called only once. (delayed computation)
- * value in dom is not updated.
+ * On every click in parent:
+ * Component renders? ✅
+ * Component's children get rendered? ✅
+ * {heavy} is called? ❌ => Only once (delayed computation)
+ * {state} changes in UI? ❌
  */
 function StateOne() {
   console.log("StateOne");
 
-  const [value, setValue] = useState(() => calculateValue("StateOne"));
+  const [state] = useState(() => heavy());
 
-  return <div>{value}</div>;
+  return (
+    <div style={{ border: "1px solid white" }}>
+      <ReadableTable value={state}></ReadableTable>
+      <RandomColorDiv />
+    </div>
+  );
 }
 
 /**
- * StateTwo is logged on every re-render.
- * calculateValue is called on every re-render.
- * value in dom is not updated.
+ * On every click in parent:
+ * Component renders? ✅
+ * Component's children get rendered? ✅
+ * {heavy} is called? ❌ => Only once (delayed computation)
+ * {state} changes in UI? ✅ (due to setState)
  */
 function StateTwo() {
-  console.log("StateTwo");
-
-  const [value, setValue] = useState(calculateValue("StateTwo"));
-
-  return <div>{value}</div>;
-}
-
-/**
- * StateThree is logged on every re-render.
- * calculateValue is called on every re-render.
- * value in dom is updated due to setValue.
- */
-function StateThree() {
   console.log("StateThree");
 
-  const [value, setValue] = useState(() => calculateValue("StateThree"));
-  function setTheValue() {
-    setValue(calculateValue("StateThree"));
+  const [state, setState] = useState(() => heavy());
+  function update() {
+    setState(heavy());
   }
 
-  return <div onClick={setTheValue}>{value}</div>;
+  return (
+    <div style={{ border: "1px solid white" }}>
+      <ReadableTable value={state}></ReadableTable>
+      <RandomColorDiv />
+      <button onClick={update}>Set state</button>
+    </div>
+  );
 }
 
-export { StateOne, StateTwo, StateThree };
+export { StateZero, StateOne, StateTwo };
