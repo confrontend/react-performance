@@ -9,8 +9,6 @@ import { RandomColorDiv, ReadableTable, heavy } from "../utils/util.jsx";
  * {state} changes in UI? ❌
  */
 function StateZero() {
-  console.log("StateZero");
-
   const [state] = useState(heavy());
 
   return (
@@ -29,9 +27,8 @@ function StateZero() {
  * {state} changes in UI? ❌
  */
 function StateOne() {
-  console.log("StateOne");
-
   const [state] = useState(() => heavy());
+  console.log(state);
 
   return (
     <div className="childWrapper">
@@ -49,8 +46,6 @@ function StateOne() {
  * {state} changes in UI? ✅ (due to setState)
  */
 function StateTwo() {
-  console.log("StateThree");
-
   const [state, setState] = useState(() => heavy());
   function update() {
     setState(heavy());

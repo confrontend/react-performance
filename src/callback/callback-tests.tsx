@@ -5,9 +5,7 @@ import { useCallback, useRef, useState } from "react";
 function CallbackOne({ initialValue }: { initialValue: boolean }) {
   const [state, setState] = useState(initialValue);
 
-  const toggle = useCallback(() => {
-    return setState((lastValue) => !lastValue);
-  }, []);
+  const toggle = useCallback(() => setState((lastValue) => !lastValue), []);
 
   // This ref will hold the previous version of the toggle function
   const lastToggleRef = useRef<() => void>();

@@ -1,5 +1,11 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { RandomColorDiv, ReadableTable, heavy } from "../utils/util.jsx";
+
+/**
+ * The main difference between useCallback and useMemo is that
+ * useCallback returns a memoized callback function,
+ * while useMemo returns a memoized value.
+ */
 
 /**
  * On every click in parent:
@@ -29,13 +35,19 @@ function MemoOne() {
  * {heavy} is called? ✅
  * {state} changes in UI? ✅
  */
-function MemoTwo({ count }: { count: number }) {
+function MemoTwo() {
+  const [refresh, setRefresh] = useState(false);
   // The difference between useMemo and useState with lazy initiation is the dependency array.
-  const state = useMemo(() => heavy(), [count]);
+  const state = useMemo(() => heavy(), [refresh]);
+
+  const update = () => {
+    setRefresh((prev) => !prev);
+  };
   return (
     <div style={{ border: "1px solid white" }}>
       <ReadableTable value={state} />
       <RandomColorDiv />
+      <button onClick={update}>Force Update</button>
     </div>
   );
 }
