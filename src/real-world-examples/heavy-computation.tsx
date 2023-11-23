@@ -15,13 +15,8 @@ const heavySelectComputation = (itemId: number): string => {
   return `Computed value for item ${itemId}`;
 };
 
-/**
- * The ListItem component is wrapped in React.memo, which prevents
- * the component from re-rendering unless its props change.
- */
 const ListItem = memo(({ itemId, onSelect }: ListItemProps) => {
-  console.log("render");
-
+  console.log("ListItem render", itemId);
   return <li onClick={() => onSelect(itemId)}>Item {itemId}</li>;
 });
 
@@ -30,13 +25,6 @@ export const List = ({ items }: ListProps) => {
     [key: number]: string;
   }>({});
 
-  /**
-   * The onSelect callback is wrapped with useCallback to ensure that it has a
-   * stable reference across renders. This is important because it's passed down
-   * to ListItem, which is wrapped in React.memo for performance reasons. If
-   * onSelect were recreated on each render, it would cause ListItem to
-   * re-render unnecessarily.
-   */
   const onSelect = useCallback((itemId: number) => {
     setComputationCache((prevCache) => {
       if (!prevCache[itemId]) {
@@ -50,14 +38,16 @@ export const List = ({ items }: ListProps) => {
     });
   }, []);
 
+  // useMemo to memoize the list items
+  const memoizedListItems = useMemo(() => {
+    return items.map((itemId) => (
+      <ListItem key={itemId} itemId={itemId} onSelect={onSelect} />
+    ));
+  }, [items, onSelect]);
+
   return (
     <>
-      <ul>
-        {items.map((itemId) => (
-          <ListItem key={itemId} itemId={itemId} onSelect={onSelect} />
-        ))}
-      </ul>
-
+      <ul>{memoizedListItems}</ul>
       <br />
       <div>
         <code>computationCache:</code>
